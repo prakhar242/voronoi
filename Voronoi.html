@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Delta OnSite2 </title>
+</head>
+<body>
+	<canvas  id="canvas" width=500 height=500> </canvas>
+	<br> Enter No. of Points <input id ="in" type="number">
+	<br> <input id="btn" value = "Submit" type="button" onclick="drawPoints();">
+	<br> <input type="button" value="Play" onclick="drawColor();">
+	<style type="text/css">
+	canvas {
+		border:1px solid #d3d3d3;
+		background-color: #f1f1f1;
+		position: absolute;
+	}
+	#in
+	{
+		margin-top: 550px;
+	}
+</style>
+<script type="text/javascript">
+	var cnvs = document.getElementById("canvas");
+	var ctx = cnvs.getContext("2d");
+	var pixX =[];
+	var pixY =[];
+	var color = [];
+	var index=-1;
+	function drawPoints()
+	 {        color =[];
+	 	pixY =[];
+	 	pixX=[];
+	 	var num = document.getElementById("in").value;
+		ctx.clearRect(0,0,500,500);
+		for(var i=1; i<=num; i++)
+		{
+			var x = Math.random(1) * 500;
+			var y = Math.random(1) * 500;
+			pixX.push(x);
+			pixY.push(y);
+			ctx.fillStyle = "#000000";
+			ctx.fillRect(x,y,2,2);
+			
+				color.push('hsl(' + 360 * Math.random() + ', 50%, 50%)');
+		}
+	}
+	function drawColor()
+{
+	var num1 =document.getElementById("in").value;
+	
+	var k, j, h;
+	var dx, dy, distance;
+	for(k=0; k<=500; k++)
+	{
+		for(j=0 ; j<=500 ; j++)
+			{
+				var min =1000000;
+				for(h=0;h<num1;h++)
+				{
+					dx = (pixX[h] - k);
+					dy = (pixY[h] - j);
+					distance = (Math.pow(dx, 2) + Math.pow(dy, 2));
+					if(distance<min) 
+					{
+						console.log("reached here");
+						index =h;
+						min = distance;
+					}
+				}  
+				ctx.fillStyle = color[index];
+				ctx.fillRect(k,j,1,1);
+			}
+    }
+
+	console.log("end");
+}
+</script>
+</body>
+</html>
